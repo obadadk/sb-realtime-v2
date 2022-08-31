@@ -10,6 +10,8 @@ const channel = supabase.channel("user1-location", {
   },
 });
 
+const max = 10;
+
 const Home: NextPage = () => {
   const [self, setSelf] = useState(0);
   const [openent, setOpenent] = useState(0);
@@ -27,7 +29,7 @@ const Home: NextPage = () => {
   }
 
   async function sendMessage() {
-    if (openent < 25 && self < 25) {
+    if (openent < max && self < max) {
       const newCount = self + 1;
       setSelf(newCount);
 
@@ -48,9 +50,12 @@ const Home: NextPage = () => {
       </Head>
       <main className={styles.main}>
         <button onClick={subscribe}>Connect</button>
-        <div className={styles.divider}>
-          {`( Self: ${self} ) -----  ( Openent: ${openent} )`}
-        </div>
+        <div className={styles.divider}></div>
+        <div>{`Maximum: ${max}`}</div>
+        <div className={styles.divider}></div>
+        <div>{`( Self: ${self} ) -----  ( Openent: ${openent} )`}</div>
+        <div className={styles.divider}></div>
+
         <button onClick={sendMessage}>Click</button>
       </main>
     </div>
