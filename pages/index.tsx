@@ -30,15 +30,18 @@ const Home: NextPage = () => {
 
   async function sendMessage() {
     if (openent < max && self < max) {
-      const newCount = self + 1;
-      setSelf(newCount);
-
-      await channel.send({
-        type: "broadcast",
-        event: "location",
-        payload: { count: newCount },
-      });
+      updateSelf(self + 1);
     }
+  }
+
+  async function updateSelf(count: number) {
+    setSelf(count);
+
+    await channel.send({
+      type: "broadcast",
+      event: "location",
+      payload: { count: count },
+    });
   }
 
   return (
@@ -56,7 +59,13 @@ const Home: NextPage = () => {
         <div>{`( Self: ${self} ) -----  ( Openent: ${openent} )`}</div>
         <div className={styles.divider}></div>
 
-        <button onClick={sendMessage}>Click</button>
+        <button className={styles.count} onClick={sendMessage}>
+          Click
+        </button>
+        <div className={styles.divider}></div>
+        <button className={styles.reset} onClick={() => updateSelf(0)}>
+          Reset
+        </button>
       </main>
     </div>
   );
